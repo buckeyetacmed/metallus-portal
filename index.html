@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metallus - Buckeye TacMed Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1b2a;--navy2:#1a2d42;--navy3:#243550;--gold:#d4a017;--gold2:#f0b429;--red:#c0392b;--red2:#e74c3c;--white:#f5f0e8;--muted:#8a96a3;--border:rgba(212,160,23,0.2);--green:#1e7d45;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--navy);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;}
+
+/* HEADER */
+.header{background:var(--navy2);border-bottom:2px solid var(--gold);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.header-left{display:flex;align-items:center;gap:14px;}
+.site-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);}
+.site-name span{color:var(--gold);}
+.header-right{text-align:right;}
+.client-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.client-name{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);line-height:1.1;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy2) 0%,var(--navy3) 100%);border-bottom:1px solid var(--border);padding:40px 24px 36px;text-align:center;}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:10px;}
+.hero-title span{color:var(--gold);}
+.hero-sub{font-size:14px;color:var(--muted);line-height:1.6;max-width:520px;margin:0 auto 24px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(30,125,69,0.15);border:1px solid var(--green);border-radius:20px;padding:6px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#2ecc71;}
+.hero-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:#2ecc71;box-shadow:0 0 6px rgba(46,204,113,0.6);}
+
+/* GRID */
+.grid{max-width:860px;margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+
+/* CARDS */
+.card{background:var(--navy2);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;transition:transform 0.15s,border-color 0.15s;display:flex;flex-direction:column;}
+.card:hover{transform:translateY(-2px);}
+.card.kit:hover{border-color:var(--gold);}
+.card.ew:hover{border-color:#4ab8d8;}
+.card.aed:hover{border-color:#e74c3c;}
+.card.dash:hover{border-color:#2ecc71;}
+
+.card-top{padding:22px 22px 0;}
+.card-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;}
+.card.kit  .card-icon{background:rgba(212,160,23,0.15);}
+.card.ew   .card-icon{background:rgba(74,184,216,0.15);}
+.card.aed  .card-icon{background:rgba(192,57,43,0.15);}
+.card.dash .card-icon{background:rgba(30,125,69,0.15);}
+
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);margin-bottom:6px;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;}
+.card-standard{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;display:inline-block;margin-bottom:18px;}
+.card.kit  .card-standard{background:rgba(212,160,23,0.1);color:var(--gold);}
+.card.ew   .card-standard{background:rgba(74,184,216,0.1);color:#4ab8d8;}
+.card.aed  .card-standard{background:rgba(192,57,43,0.1);color:#e74c3c;}
+.card.dash .card-standard{background:rgba(30,125,69,0.1);color:#2ecc71;}
+
+.card-btn{display:block;margin:0 22px 22px;padding:13px;border-radius:6px;text-align:center;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;transition:all 0.15s;margin-top:auto;}
+.card.kit  .card-btn{background:var(--gold);color:var(--navy);}
+.card.kit  .card-btn:hover{background:var(--gold2);}
+.card.ew   .card-btn{background:#1a6a8a;color:#fff;}
+.card.ew   .card-btn:hover{background:#4ab8d8;color:var(--navy);}
+.card.aed  .card-btn{background:var(--red);color:#fff;}
+.card.aed  .card-btn:hover{background:var(--red2);}
+.card.dash .card-btn{background:var(--green);color:#fff;}
+.card.dash .card-btn:hover{background:#27ae60;}
+
+/* DIVIDER */
+.card-divider{height:1px;background:rgba(255,255,255,0.06);margin:0 22px 18px;}
+
+/* STEPS */
+.card-steps{padding:0 22px 4px;}
+.card-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.step-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.card.kit  .step-num{background:rgba(212,160,23,0.2);color:var(--gold);}
+.card.ew   .step-num{background:rgba(74,184,216,0.2);color:#4ab8d8;}
+.card.aed  .step-num{background:rgba(192,57,43,0.2);color:#e74c3c;}
+.card.dash .step-num{background:rgba(30,125,69,0.2);color:#2ecc71;}
+.step-text{font-size:12px;color:var(--muted);line-height:1.5;}
+
+/* CONTACT */
+.contact{max-width:860px;margin:0 auto 40px;padding:0 24px;}
+.contact-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.contact-info .label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.contact-info .name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:0.06em;color:var(--white);}
+.contact-info .title{font-size:12px;color:var(--muted);margin-top:3px;}
+.contact-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.contact-btn{display:flex;align-items:center;gap:7px;padding:10px 18px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.15s;}
+.contact-btn.call{background:var(--green);color:#fff;}
+.contact-btn.call:hover{background:#27ae60;}
+.contact-btn.email{background:transparent;border:1.5px solid var(--gold);color:var(--gold);}
+.contact-btn.email:hover{background:rgba(212,160,23,0.1);}
+
+/* FOOTER */
+.footer{text-align:center;padding:20px 24px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);}
+.footer span{color:var(--gold);}
+
+@media(max-width:600px){
+  .header{flex-direction:column;align-items:flex-start;gap:10px;}
+  .contact-card{flex-direction:column;align-items:flex-start;}
+  .grid{grid-template-columns:1fr;padding:24px 16px;}
+}
+
+/* Training Schedule */
+.training-section{max-width:860px;margin:0 auto;padding:0 24px 32px;}
+.training-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.training-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);}
+.training-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.training-card{background:var(--navy2);border:1px solid rgba(255,255,255,0.07);border-radius:10px;overflow:hidden;}
+.training-row{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.15s;}
+.training-row:last-child{border-bottom:none;}
+.training-row:hover{background:rgba(255,255,255,0.02);}
+.training-date-block{flex-shrink:0;text-align:center;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.25);border-radius:6px;padding:7px 14px;min-width:62px;}
+.training-date-block.past{opacity:0.45;background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);}
+.training-date-block.today{background:rgba(30,125,69,0.15);border-color:rgba(46,204,113,0.4);}
+.training-month{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);}
+.training-date-block.today .training-month{color:#2ecc71;}
+.training-day{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:700;color:var(--white);line-height:1.1;}
+.training-info{flex:1;}
+.training-topic{font-size:14px;font-weight:500;color:var(--white);margin-bottom:4px;}
+.training-location{font-size:12px;color:var(--muted);}
+.training-location span{color:var(--gold);font-weight:500;}
+.training-notes{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;}
+.training-badge{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;align-self:flex-start;margin-top:3px;}
+.training-badge.upcoming{background:rgba(212,160,23,0.12);color:var(--gold);border:1px solid rgba(212,160,23,0.3);}
+.training-badge.soon{background:rgba(192,57,43,0.12);color:#e74c3c;border:1px solid rgba(192,57,43,0.3);}
+.training-badge.today{background:rgba(30,125,69,0.15);color:#2ecc71;border:1px solid rgba(46,204,113,0.3);}
+.training-badge.past{background:rgba(255,255,255,0.04);color:var(--muted);border:1px solid rgba(255,255,255,0.08);}
+.training-empty{padding:28px 20px;text-align:center;color:var(--muted);font-size:13px;}
+.training-loading{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
+.spin{display:inline-block;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <img src="data:image/png;base64,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" alt="Buckeye TacMed" style="height:52px;width:auto;" />
+    <div class="site-name">Buckeye <span>TacMed</span></div>
+  </div>
+  <div class="header-right">
+    <div class="client-label">Client Portal</div>
+    <div class="client-name">Metallus Inc.</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title">Your <span>ReadyStation</span> Portal</div>
+  <div class="hero-sub">All your compliance tools in one place. Submit inspections, monitor status, and stay ANSI compliant &#8212; from any device.</div>
+  <div class="hero-badge">Live Compliance Monitoring Active</div>
+</div>
+
+<!-- CARDS -->
+<div class="grid">
+
+  <!-- KIT INVENTORY -->
+  <div class="card kit">
+    <div class="card-top">
+      <div class="card-icon">&#x1F9F0;</div>
+      <div class="card-title">First Aid Kit Inventory</div>
+      <div class="card-desc">Submit a kit inspection for any location. Records pass/fail status, item quantities, expiration dates, and photos directly to your compliance sheet.</div>
+      <div class="card-standard">ANSI/ISEA Z308.1-2021</div>
+      <div class="card-divider"></div>
+      <div class="card-steps">
+        <div class="card-step"><div class="step-num">1</div><div class="step-text">Select your location from the dropdown</div></div>
+        <div class="card-step"><div class="step-num">2</div><div class="step-text">Check each item and mark Pass or Fail</div></div>
+        <div class="card-step"><div class="step-num">3</div><div class="step-text">Hit Submit &#8212; dashboard updates instantly</div></div>
+      </div>
+    </div>
+    <a class="card-btn" href='https://buckeyetacmed.github.io/metallusforms/kit.html' target="_blank">Open Kit Inventory Form</a>
+  </div>
+
+  <!-- EYEWASH -->
+  <div class="card ew">
+    <div class="card-top">
+      <div class="card-icon">&#x1F4A7;</div>
+      <div class="card-title">Eyewash Station Inspection</div>
+      <div class="card-desc">Monthly inspection checklist for plumbed and self-contained eyewash stations. Records pass/fail per item with photo documentation.</div>
+      <div class="card-standard">ANSI/ISEA Z358.1</div>
+      <div class="card-divider"></div>
+      <div class="card-steps">
+        <div class="card-step"><div class="step-num">1</div><div class="step-text">Select station location and unit type</div></div>
+        <div class="card-step"><div class="step-num">2</div><div class="step-text">Work through the 16-item checklist</div></div>
+        <div class="card-step"><div class="step-num">3</div><div class="step-text">Submit &#8212; logs to your eyewash sheet</div></div>
+      </div>
+    </div>
+    <a class="card-btn" href='https://buckeyetacmed.github.io/metallusforms/eyewash.html' target="_blank">Open Eyewash Inspection</a>
+  </div>
+
+  <!-- AED -->
+  <div class="card aed">
+    <div class="card-top">
+      <div class="card-icon">&#x2764;</div>
+      <div class="card-title">AED Inspection</div>
+      <div class="card-desc">Monthly AED inspection covering unit condition, pad and battery expiration, rescue kit contents, indicator light status, and accessibility.</div>
+      <div class="card-standard">Monthly</div>
+      <div class="card-divider"></div>
+      <div class="card-steps">
+        <div class="card-step"><div class="step-num">1</div><div class="step-text">Select the AED location</div></div>
+        <div class="card-step"><div class="step-num">2</div><div class="step-text">Complete the monthly checklist and expiry dates</div></div>
+        <div class="card-step"><div class="step-num">3</div><div class="step-text">Submit &#8212; logs to your AED sheet</div></div>
+      </div>
+    </div>
+    <a class="card-btn" href='https://buckeyetacmed.github.io/metallusforms/aed.html' target="_blank">Open AED Inspection</a>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="card dash">
+    <div class="card-top">
+      <div class="card-icon">&#x1F4CA;</div>
+      <div class="card-title">ReadyStation Dashboard</div>
+      <div class="card-desc">Your live compliance dashboard. See pass/fail status for every location, expiring items, inspection history, and request a visit if anything fails.</div>
+      <div class="card-standard">Live &mdash; Updates Automatically</div>
+      <div class="card-divider"></div>
+      <div class="card-steps">
+        <div class="card-step"><div class="step-num">&#x2713;</div><div class="step-text">Green = compliant, Amber = overdue, Red = failed</div></div>
+        <div class="card-step"><div class="step-num">&#x2713;</div><div class="step-text">30-day expiry alerts for all consumables</div></div>
+        <div class="card-step"><div class="step-num">&#x2713;</div><div class="step-text">Download monthly PDF compliance reports</div></div>
+      </div>
+    </div>
+    <a class="card-btn" href='https://buckeyetacmed.github.io/clientdashboardsetup/?client=Metallus&kit=https%253A%252F%252Fdocs.google.com%252Fspreadsheets%252Fd%252Fe%252F2PACX-1vRsudovSH5g7elLD3sWY2efQQRrSQK7L1MJwGegUkYwcjjAB58SR150mhZZX9eLsfEQX7GHgHtfn6GP%252Fpub%253Fgid%253D0%2526single%253Dtrue%2526output%253Dcsv&ew=https%253A%252F%252Fdocs.google.com%252Fspreadsheets%252Fd%252Fe%252F2PACX-1vRN5hplPd3chxS7TPs5dKXWk8mGmRTNHS3RNI-HGB_yDLPvFP6cvf4qTj-hyCvdhn5cO75AgT1xrU_V%252Fpub%253Fgid%253D0%2526single%253Dtrue%2526output%253Dcsv&aed=https%253A%252F%252Fdocs.google.com%252Fspreadsheets%252Fd%252Fe%252F2PACX-1vSeKug9O_DJgvlvxpsK6tDJU6gEl8MQEK1Uk5tnP-IPGwaK_KgjYXscpSHUkYwDAcSxNg8VAgy_vbnb%252Fpub%253Fgid%253D0%2526single%253Dtrue%2526output%253Dcsv' target="_blank">Open ReadyStation Dashboard</a>
+  </div>
+
+</div>
+
+
+<!-- TRAINING SCHEDULE -->
+<div class="training-section">
+  <div class="training-header">
+    <div>
+      <div class="training-title">&#x1F4CB; Upcoming Training &amp; Site Visits</div>
+      <div class="training-sub">Scheduled by Buckeye TacMed &mdash; updates automatically</div>
+    </div>
+  </div>
+  <div class="training-card">
+    <div id="trainingBody"><div class="training-loading"><span class="spin">&#x27F3;</span> Loading schedule...</div></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact">
+  <div class="contact-card">
+    <div class="contact-info">
+      <div class="label">Your Buckeye TacMed Contact</div>
+      <div class="name">Joe Schuerger</div>
+      <div class="title">Owner</div>
+    </div>
+    <div class="contact-btns">
+      <a class="contact-btn call" href="tel:+12168547568">&#x260E; 216-854-7568</a>
+      <a class="contact-btn email" href="mailto:buckeyetacmed@gmail.com">&#x2709; Email Joe</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Powered by <span>Buckeye TacMed</span> &mdash; ReadyStation Compliance Monitoring &mdash; buckeyetacmed.com
+</div>
+
+
+<script>
+var TRAINING_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSBOPRSSZwCO3uoZe_Gh33yjbgIeGEJfViwG7s68eGfU1KwaoCacyVl9x2xqrT6TWe7R1KOGLkwpoD9/pub?gid=0&single=true&output=csv";
+
+function loadTraining() {
+  fetch(TRAINING_URL)
+    .then(function(r){ return r.text(); })
+    .then(function(t){ renderTraining(parseTrainingCSV(t)); })
+    .catch(function(){ document.getElementById("trainingBody").innerHTML = "<div class='training-empty'>Could not load training schedule. Check back soon.</div>"; });
+}
+
+function parseTrainingCSV(text) {
+  var lines = text.split("\n").filter(function(l){ return l.trim(); });
+  var rows = [];
+  for (var i = 1; i < lines.length; i++) {
+    var cols = lines[i].split(",").map(function(c){ return c.trim().replace(/^"|"$/g,""); });
+    if (cols.length >= 3 && cols[0]) rows.push(cols);
+  }
+  return rows;
+}
+
+function renderTraining(rows) {
+  var body = document.getElementById("trainingBody");
+  if (rows.length === 0) { body.innerHTML = "<div class='training-empty'>No upcoming training sessions scheduled yet.</div>"; return; }
+  rows.sort(function(a,b){ return new Date(a[0]) - new Date(b[0]); });
+  var today = new Date(); today.setHours(0,0,0,0);
+  var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  body.innerHTML = ""; var shown = 0;
+  rows.forEach(function(r) {
+    var dateStr=r[0]||""; var loc=r[1]||""; var topic=r[2]||""; var notes=r[3]||"";
+    if (!dateStr) return;
+    var d = new Date(dateStr); if (isNaN(d)) return;
+    d.setHours(0,0,0,0);
+    var daysUntil = Math.floor((d - today) / 86400000);
+    if (daysUntil < -30) return;
+    var badge, badgeCls, dateCls;
+    if (daysUntil < 0)       { badge="Completed";  badgeCls="past";     dateCls="past"; }
+    else if (daysUntil === 0){ badge="Today!";     badgeCls="today";    dateCls="today"; }
+    else if (daysUntil <= 7) { badge="In "+daysUntil+"d"; badgeCls="soon"; dateCls=""; }
+    else                     { badge="In "+daysUntil+"d"; badgeCls="upcoming"; dateCls=""; }
+
+    var row = document.createElement("div"); row.className = "training-row";
+
+    var db = document.createElement("div"); db.className = "training-date-block" + (dateCls ? " "+dateCls : "");
+    var mo = document.createElement("div"); mo.className = "training-month"; mo.textContent = months[d.getMonth()]; db.appendChild(mo);
+    var dy = document.createElement("div"); dy.className = "training-day"; dy.textContent = d.getDate(); db.appendChild(dy);
+    row.appendChild(db);
+
+    var info = document.createElement("div"); info.className = "training-info";
+    var tp = document.createElement("div"); tp.className = "training-topic"; tp.textContent = topic; info.appendChild(tp);
+    var lc = document.createElement("div"); lc.className = "training-location"; lc.innerHTML = "Location: <span>" + loc + "</span>"; info.appendChild(lc);
+    if (notes) { var nt = document.createElement("div"); nt.className = "training-notes"; nt.textContent = notes; info.appendChild(nt); }
+    row.appendChild(info);
+
+    var bg = document.createElement("div"); bg.className = "training-badge " + badgeCls; bg.textContent = badge; row.appendChild(bg);
+    body.appendChild(row); shown++;
+  });
+  if (shown === 0) body.innerHTML = "<div class='training-empty'>No upcoming training sessions scheduled.</div>";
+}
+
+window.addEventListener("load", function(){ loadTraining(); });
+</script>
+</body>
+</html>
